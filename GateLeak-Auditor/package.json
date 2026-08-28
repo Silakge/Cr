@@ -1,0 +1,10 @@
+{
+  "name": "gateleak-auditor",
+  "version": "0.3.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check background.js && node --check content.js && node --check popup.js && node --check lib/core.js"
+  }
+}

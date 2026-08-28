@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GateLeak Auditor</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">CLIENT-BOUNDARY AUDIT</p>
+        <h1>GateLeak Auditor</h1>
+      </div>
+      <span id="statusBadge" class="status idle">空闲</span>
+    </header>
+
+    <p class="lede">检测最终拒绝前，图片字节、Blob 或图片 URL 是否已到达当前标签页。</p>
+
+    <section class="controls" aria-label="审计控制">
+      <label class="setting keywordSetting" for="denialKeywords">
+        <span class="settingLabel">拒绝关键词 <small>多个关键词用 | 分隔</small></span>
+        <input id="denialKeywords" type="text" value="非常抱歉" placeholder="例如：非常抱歉 | 无法生成">
+      </label>
+      <label class="setting" for="minBytes">
+        图片候选阈值
+        <span><input id="minBytes" type="number" min="512" max="10485760" step="1024" value="16384"> bytes</span>
+      </label>
+      <label class="captureSetting" for="captureImages">
+        <input id="captureImages" type="checkbox">
+        <span><strong>保留候选图片（研究模式）</strong><small>默认关闭；只保留浏览器已收到的候选，最多 3 张、单张 3 MB。</small></span>
+      </label>
+      <div class="buttonRow">
+        <button id="startButton" class="primary">开始审计</button>
+        <button id="scanButton">立即扫描页面</button>
+        <button id="denialButton" class="warning">标记违规时刻</button>
+        <button id="stopButton">停止</button>
+      </div>
+      <p class="shortcut">页面显示违规时也可按 <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd>；Mac 为 <kbd>⌘</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd>。</p>
+    </section>
+
+    <section id="resultCard" class="result level-none" aria-live="polite">
+      <div class="level" id="levelValue">—</div>
+      <div>
+        <h2 id="resultTitle">尚未开始</h2>
+        <p id="resultExplanation">在目标页面点击开始审计。</p>
+      </div>
+    </section>
+
+    <section class="meta" id="metaSection" hidden>
+      <span id="targetOrigin"></span>
+      <span id="observerState"></span>
+      <span id="keywordState"></span>
+      <span id="denialTime"></span>
+      <span id="eventCount"></span>
+    </section>
+
+    <section id="captureSection" class="captureSection" hidden>
+      <div class="captureHeader">
+        <div>
+          <p class="eyebrow">RETAINED CANDIDATES</p>
+          <h2>已保留图片</h2>
+        </div>
+        <span id="captureCount" class="captureCount"></span>
+      </div>
+      <p>点击下面的紫色按钮，将候选图片保存到下载目录。</p>
+      <div id="captureButtons" class="captureButtons"></div>
+    </section>
+
+    <section id="warningSection" class="warnings" hidden>
+      <h2>注意</h2>
+      <ul id="warningList"></ul>
+    </section>
+
+    <section class="timelineSection">
+      <div class="sectionHeader">
+        <div>
+          <p class="eyebrow">EVIDENCE TRACE</p>
+          <h2>事件时间线</h2>
+        </div>
+        <label class="toggle"><input id="findingsOnly" type="checkbox" checked> 仅证据</label>
+      </div>
+      <div id="timeline" class="timeline empty">暂无事件</div>
+    </section>
+
+    <footer>
+      <button id="exportButton">导出脱敏 JSON</button>
+      <button id="clearButton" class="ghost">清空</button>
+      <p>默认不保存正文或原始 URL。开启研究模式后，候选图片仅在当前浏览器会话中保留；脱敏 JSON 不含图片。</p>
+      <p id="errorMessage" class="error" role="alert"></p>
+    </footer>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GateLeak Local Fixture</title>
+    <style>
+      body { max-width: 760px; margin: 48px auto; padding: 0 20px; font: 16px/1.6 system-ui; color: #172033; }
+      button { margin: 8px 8px 8px 0; padding: 10px 14px; }
+      #output { min-height: 160px; margin-top: 20px; padding: 18px; border: 1px solid #ccd3dc; border-radius: 12px; }
+      img { width: 128px; height: 128px; image-rendering: pixelated; }
+    </style>
+  </head>
+  <body>
+    <h1>GateLeak 本地测试页</h1>
+    <p>每次只测试一个按钮；先在扩展中清空并开始审计。</p>
+    <button id="l0">模拟 L0：只有拒绝</button>
+    <button id="l2">模拟 L2：URL 后拒绝</button>
+    <button id="l3">模拟 L3：Data 图片后拒绝</button>
+    <div id="output"></div>
+    <script src="fixture.js"></script>
+  </body>
+</html>
