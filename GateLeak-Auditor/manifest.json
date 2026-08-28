@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "GateLeak Auditor",
+  "version": "0.3.1",
+  "description": "Detects whether image bytes or image capabilities reach a Chrome client before a generation request is denied.",
+  "minimum_chrome_version": "102",
+  "permissions": [
+    "activeTab",
+    "debugger",
+    "scripting",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "GateLeak Auditor",
+    "default_popup": "popup.html"
+  },
+  "commands": {
+    "mark-denial": {
+      "suggested_key": {
+        "default": "Alt+Shift+G",
+        "mac": "Command+Shift+G"
+      },
+      "description": "Mark the current moment as the policy denial"
+    }
+  }
+}
